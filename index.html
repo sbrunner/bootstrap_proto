@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf8"/>
+        <title>Boostrap proto</title>
+        <link href="bootstrap/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+        <link href="bootstrap/bootstrap/css/bootstrap-responsive.css" rel="stylesheet" media="screen">
+        <style>
+            html, body {
+/*                width: 100%;
+                height: 100%;*/
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+            }
+            .mygrid .span1 {
+                background-color: #ccccff
+            }
+            .container-fluid .span2 {
+                background-color: #ccffcc
+            }
+            .container-fluid .span10 {
+                background-color: #ffcccc
+            }
+#header {
+    height: 130px;
+    width: 100%;
+    background: url("images/header.jpeg");
+    background-color: #a02d00;
+    background-repeat: no-repeat;
+    background-position: right top;
+    position: absolute;
+}
+#tools {
+    position: absolute;
+}
+@media (min-width: 1200px) {
+    #tools {
+        width: 330px;
+    }
+}
+@media (min-width: 980px) and (max-width: 1199px) {
+    #tools {
+        width: 290px;
+    }
+}
+@media (min-width: 768px) and (max-width: 979px) {
+    #tools {
+        width: 218px;
+    }
+}
+@media (min-width: 500px) and (max-width: 767px) {
+    #tools {
+        width: 150px;
+    }
+    #tools [class*="span"] {
+        margin-left: 0;
+        padding: 3px 10px;
+    }
+}
+@media (min-width: 500px) {
+    .only-alt-layout {
+        display: none;
+    }
+}
+@media (max-width: 499px) {
+    .no-alt-layout {
+        display: none;
+    }
+}
+#toolbar {
+    position: absolute;
+}
+#mappanel {
+    position: absolute;
+    background-color: #ffcccc
+}
+#maprelated {
+    width: 40%;
+    display: none;
+    position: absolute;
+    background-color: #ccffff
+}
+#notificationarea {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}
+#notificationarea > div {
+    width: auto;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+#toolbar .navbar {
+    margin-bottom: 0;
+}
+@media (max-width: 979px) {
+    #toolbar .navbar .collapse {
+        position: absolute;
+        top: 41px;
+        background-color: #F2F2F2;
+        border-color: #555;
+        border-size: 0 1px 1px 1px;
+    }
+    #toolbar .navbar .collapse > * {
+        margin: 1em;
+    }
+}
+@media (min-width: 500px) and (max-width: 979px) {
+    #toolbar .navbar .collapse {
+        right: 0;
+    }
+}
+@media (max-width: 499px) {
+    #toolbar .navbar .collapse {
+        left: 0;
+        width: 100%;
+    }
+}
+#t1 {
+    background-color: #ccffcc;
+    padding: 10px 0;
+}
+#t1 div.row:first-child {
+    margin-top: 0;
+}
+#t1 div.row {
+    margin-top: 10px;
+}
+.dropdown .btn {
+    margin: 0.4em 1em;
+    width: 10em;
+}
+.row {
+    margin-left: 0;
+}
+[class*="span"] {
+    margin-left: 10px
+}
+        </style>
+        <script src="http://code.jquery.com/jquery.js"></script>
+        <script src="bootstrap/bootstrap/js/bootstrap.js"></script>
+        <script>
+var header;
+var tools;
+var toolbar;
+var maprelated;
+var mappanel;
+
+function panel(event) {
+    tools.children().css('display', 'none');
+    $($(event.target).attr('rel')).css('display', 'block');
+    
+}
+function altview() {
+    if (maprelated.css('display') == 'none') {
+        maprelated.css('display', 'block');
+    }
+    else {
+        maprelated.css('display', 'none');
+    }
+    layout();
+}
+function layout() {
+    if (!header) {
+        header = $('#header')
+        tools = $('#tools')
+        toolbar = $('#toolbar')
+        maprelated = $('#maprelated')
+        mappanel = $('#mappanel')
+    }
+
+    //if ($(window).width() >= 768) {
+    if ($(window).width() >= 500) {
+        header.css('display', 'block');
+        tools.css('display', 'block');
+        mappanel.css('display', 'block');
+        tools.css('width', '');
+
+
+        tools.css('top', header.height());
+        tools.css('width', tools.width());
+        tools.css('height', $(window).height() - header.height());
+
+        toolbar.css('top', header.height());
+        toolbar.css('left', tools.width());
+        toolbar.css('width', $(window).width() - tools.width());
+
+        mappanel.css('top', header.height() + toolbar.height());
+        mappanel.css('height', $(window).height() - header.height() - toolbar.height());
+        mappanel.css('left', tools.width());
+        var mrWidth = maprelated.css('display') == 'none' ? 0 : maprelated.width()
+        mappanel.css('width', $(window).width() - tools.width() - mrWidth);
+        
+        maprelated.css('top', header.height() + toolbar.height());
+        maprelated.css('height', $(window).height() - header.height() - toolbar.height());
+        maprelated.css('left', $(window).width() - maprelated.width());
+    }
+    else {
+        header.css('display', 'none');
+        header.css('maprelated', 'none');
+
+        tools.css('top', toolbar.height());
+        tools.css('height', $(window).height() - toolbar.height());
+        tools.css('width', $(window).width());
+
+        toolbar.css('top', 0);
+        toolbar.css('left', 0);
+        toolbar.css('width', $(window).width());
+
+        mappanel.css('top', toolbar.height());
+        mappanel.css('height', $(window).height() - toolbar.height());
+        mappanel.css('left', 0);
+        mappanel.css('width', $(window).width());
+    }
+}
+function adddropdown() {
+    $('#toolbar .navbar .collapse .pull-right').append(
+        '  <li class="dropdown">'
+        + '    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>'
+        + '    <ul class="dropdown-menu">'
+        + '      <li><button type="button" class="btn" data-toggle="button2">g2</button></li>'
+        + '      <li><button type="button" class="btn" data-toggle="button2">g2</button></li>'
+        + '      <li class="divider"></li>'
+        + '      <li class="nav-header">Nav header</li>'
+        + '      <li><button type="button" class="btn" data-toggle="button2">g2</button></li>'
+        + '    </ul>'
+        + '  </li>')
+}
+        </script>
+    </head>
+    <body onload="layout()" onresize="layout()">
+        <div id="header"></div>
+        <div id="tools">
+            <div id='t1'>
+        <div class="bs-docs-grid mygrid">
+            <div class="row show-grid">
+                <!--div title="" data-original-title="1" class="span1">h1 sadfasdfasdf asdf asdf asdf asdf</div-->
+                <div title="" data-original-title="2" class="span1">h1</div>
+                <div title="" data-original-title="2" class="span1">h1</div>
+                <div title="" data-original-title="3" class="span1">h1</div>
+                <div title="" data-original-title="3" class="span1">h1</div>
+            </div>
+            <div class="row show-grid">
+                <div title="" data-original-title="" class="span1">1</div>
+                <div title="" data-original-title="" class="span1">1</div>
+                <div title="" data-original-title="" class="span1">1</div>
+                <div title="" data-original-title="" class="span1">1</div>
+            </div>
+            <div class="row show-grid">
+                <div title="" data-original-title="" class="span1">1</div>
+                <div title="" data-original-title="" class="span1">1</div>
+                <div title="" data-original-title="" class="span1">1</div>
+                <div title="" data-original-title="" class="span1">1</div>
+            </div>
+        </div>
+            </div>
+            <div id='t2' style="display: none;">2
+            </div>
+            <div id='t3' style="display: none;">
+        <h1>Visibility</h1>
+        <p class="visible-phone">visible-phone</p>
+        <p class="visible-tablet">visible-tablet</p>
+        <p class="visible-desktop">visible-desktop</p>
+        <p class="hidden-phone">hidden-phone</p>
+        <p class="hidden-tablet">hidden-tablet</p>
+        <p class="hidden-desktop">hidden-desktop</p>
+            </div>
+            <div id='t4' style="display: none;">
+        <table class="table table-striped">
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>@fat</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td colspan="2">Larry the Bird</td>
+                    <td>@twitter</td>
+                </tr>
+            </tbody>
+        </table>
+            </div>
+            <div id='t4' style="display: none;">4
+            </div>
+            <div id='t5' style="display: none;">5
+            </div>
+            <div id='t6' style="display: none;">6
+            </div>
+        </div>
+        <div id="mappanel"></div>
+        <div id="maprelated"></div>
+        <div id="notificationarea">
+        <div class="alert alert-box">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <b>Info!</b>
+            Best check yo self, you're not...
+        </div>
+        <br />
+        <div class="alert alert-info">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <b>Info!</b>
+            Best check yo self, you're not...
+        </div>
+        <br />
+        <div class="alert alert-error">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <b>Warning!</b>
+            Best check yo self, you're not...
+        </div>
+        <br />
+        <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <b>Success!</b>
+            Best check yo self, you're not...
+        </div>
+        </div>
+
+        <div id="toolbar">
+        <div class="navbar">
+          <div class="navbar-inner">
+            <div class="container">
+              <a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </a>
+              <a class="brand" href="#">Title</a>
+              <div class="nav-collapse collapse navbar-responsive-collapse">
+                <ul class="nav">
+        <a onclick="altview()" role="button" class="btn no-alt-layout" data-toggle="modal">Alternate view</a>
+        <!-- Button to trigger modal -->
+        <a href="#myModal" role="button" class="btn" data-toggle="modal">WMS browser</a>
+                <li><button id="b1" rel='#t1' onclick="panel(event)" type="button" class="btn" data-toggle="button1">tg1</button></li>
+                <li><button id="b2" rel='#t3' onclick="panel(event)" type="button" class="btn" data-toggle="button1">tg1</button></li>
+                <li><button id="b3" rel='#t4' onclick="panel(event)" type="button" class="btn" data-toggle="button2">tg2</button></li>
+                <li><button id="b4" rel='#t5' onclick="panel(event)" type="button" class="btn" data-toggle="button2">tg2</button></li>
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                      <li><button type="button" class="btn" data-toggle="button2">g2</button></li>
+                      <li><button type="button" class="btn" data-toggle="button2">g2</button></li>
+                      <li class="divider"></li>
+                      <li class="nav-header">Nav header</li>
+                <li><button type="button" class="btn" data-toggle="button2">g2</button></li>
+                    </ul>
+                  </li>
+                </ul>
+                <form class="navbar-search pull-left" action="">
+                    <input type="text" class="search-query span3" style="margin: 0 auto;" data-provide="typeahead" data-items="4" data-source='["Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Dakota","North Carolina","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"]'></input>
+                </form>
+                <ul class="nav pull-right">
+                <li><button type="button" onclick="adddropdown()" class="btn">g2</button></li>
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                      <li><button type="button" class="btn" data-toggle="button2">g2</button></li>
+                      <li><button type="button" class="btn" data-toggle="button2">g2</button></li>
+                      <li class="divider"></li>
+                      <li class="nav-header">Nav header</li>
+                <li><button type="button" class="btn" data-toggle="button2">g2</button></li>
+                    </ul>
+                  </li>
+                </ul>
+              </div><!-- /.nav-collapse -->
+            </div>
+          </div><!-- /navbar-inner -->
+        </div><!-- /navbar -->
+        </div>
+
+
+
+
+
+         
+        <!-- Modal -->
+        <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">Modal header</h3>
+            </div>
+            <div class="modal-body">
+                <p>One fine body…</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                <button class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </body>
+</html>
