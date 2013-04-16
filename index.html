@@ -7,22 +7,15 @@
         <link href="bootstrap/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
         <link href="bootstrap/bootstrap/css/bootstrap-responsive.css" rel="stylesheet" media="screen">
         <style>
-            html, body {
-/*                width: 100%;
-                height: 100%;*/
-                margin: 0;
-                padding: 0;
-                overflow: hidden;
-            }
-            .mygrid .span1 {
-                background-color: #ccccff
-            }
-            .container-fluid .span2 {
-                background-color: #ccffcc
-            }
-            .container-fluid .span10 {
-                background-color: #ffcccc
-            }
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+.mygrid .span1 {
+    background-color: #ccccff;
+    margin-left: 10px
+}
 #header {
     height: 130px;
     width: 100%;
@@ -136,10 +129,21 @@
 .row {
     margin-left: 0;
 }
-[class*="span"] {
-    margin-left: 10px
+.navbar .nav > li > a.btn {
+    padding: 4px 12px;
+    margin-right: 0.5em;
 }
         </style>
+<!--[if lt IE 9]>
+        <style>
+    #tools {
+        width: 290px;
+    }
+    .only-alt-layout {
+        display: none;
+    }
+        </style>
+<![endif]-->
         <script src="http://code.jquery.com/jquery.js"></script>
         <script src="bootstrap/bootstrap/js/bootstrap.js"></script>
         <script>
@@ -177,7 +181,7 @@ function layout() {
         header.css('display', 'block');
         tools.css('display', 'block');
         mappanel.css('display', 'block');
-        tools.css('width', '');
+        tools.removeAttr('style');
 
 
         tools.css('top', header.height());
@@ -338,13 +342,15 @@ function adddropdown() {
               <a class="brand" href="#">Title</a>
               <div class="nav-collapse collapse navbar-responsive-collapse">
                 <ul class="nav">
-        <a onclick="altview()" role="button" class="btn no-alt-layout" data-toggle="modal">Alternate view</a>
+        <li><a onclick="altview()" role="button" class="btn no-alt-layout" data-toggle="modal">Alternate view</a></li>
         <!-- Button to trigger modal -->
-        <a href="#myModal" role="button" class="btn" data-toggle="modal">WMS browser</a>
-                <li><button id="b1" rel='#t1' onclick="panel(event)" type="button" class="btn" data-toggle="button1">tg1</button></li>
-                <li><button id="b2" rel='#t3' onclick="panel(event)" type="button" class="btn" data-toggle="button1">tg1</button></li>
-                <li><button id="b3" rel='#t4' onclick="panel(event)" type="button" class="btn" data-toggle="button2">tg2</button></li>
-                <li><button id="b4" rel='#t5' onclick="panel(event)" type="button" class="btn" data-toggle="button2">tg2</button></li>
+        <li><a href="#myModal" role="button" class="btn" data-toggle="modal">WMS browser</a></li>
+                <li><div class="btn-group" data-toggle="buttons-radio">
+                    <button id="b1" rel='#t1' onclick="panel(event)" type="button" class="btn">tg1</button>
+                    <button id="b2" rel='#t3' onclick="panel(event)" type="button" class="btn">tg1</button>
+                    <button id="b3" rel='#t4' onclick="panel(event)" type="button" class="btn">tg2</button>
+                    <button id="b4" rel='#t5' onclick="panel(event)" type="button" class="btn">tg2</button>
+                </div></li>
                   <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
                     <ul class="dropdown-menu">
