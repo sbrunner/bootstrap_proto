@@ -136,6 +136,9 @@ html, body {
     padding: 4px 12px;
     margin-right: 0.5em;
 }
+#t2, #t2 .carousel {
+    height: 100%;
+}
         </style>
 <!--[if lt IE 9]>
         <style>
@@ -207,7 +210,10 @@ function layout() {
     }
     else {
         header.css('display', 'none');
-        header.css('maprelated', 'none');
+        maprelated.css('display', 'none');
+        if (mappanel.css('display') != 'none' && tools.css('display') != 'none') {
+            tools.css('display', 'none');
+        }
 
         tools.css('top', toolbar.height());
         tools.css('height', $(window).height() - toolbar.height());
@@ -264,7 +270,14 @@ function adddropdown() {
             </div>
         </div>
             </div>
-            <div id='t2' style="display: none;">2
+            <div id='t2' style="display: none;">
+                <div id="myCarousel" class="carousel slide" data-interval="">
+                    <div class="carousel-inner">
+                        <div class="active item">aaaa</div>
+                        <div class="item">bbbb</div>
+                    </div>
+                    <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+                </div>
             </div>
             <div id='t3' style="display: none;">
         <h1>Visibility</h1>
@@ -345,15 +358,17 @@ function adddropdown() {
               <a class="brand" href="#">Title</a>
               <div class="nav-collapse collapse navbar-responsive-collapse">
                 <ul class="nav">
+                <li><div class="btn-group" data-toggle="buttons-radio">
+                    <button onclick="mappanel(event)" type="button" class="btn active only-alt-layout">map</button>
+                    <button rel='#t1' onclick="panel(event)" type="button" class="btn active">tg1</button>
+                    <button rel='#t2' onclick="panel(event)" type="button" class="btn">tg2</button>
+                    <button rel='#t3' onclick="panel(event)" type="button" class="btn">tg3</button>
+                    <button rel='#t4' onclick="panel(event)" type="button" class="btn">tg4</button>
+                    <button rel='#t5' onclick="panel(event)" type="button" class="btn">tg5</button>
+                </div></li>
         <li><a onclick="altview()" role="button" class="btn no-alt-layout" data-toggle="modal">Alternate view</a></li>
         <!-- Button to trigger modal -->
         <li><a href="#myModal" role="button" class="btn" data-toggle="modal">WMS browser</a></li>
-                <li><div class="btn-group" data-toggle="buttons-radio">
-                    <button id="b1" rel='#t1' onclick="panel(event)" type="button" class="btn">tg1</button>
-                    <button id="b2" rel='#t3' onclick="panel(event)" type="button" class="btn">tg1</button>
-                    <button id="b3" rel='#t4' onclick="panel(event)" type="button" class="btn">tg2</button>
-                    <button id="b4" rel='#t5' onclick="panel(event)" type="button" class="btn">tg2</button>
-                </div></li>
                   <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
                     <ul class="dropdown-menu">
